@@ -1,4 +1,4 @@
-# opyright (c) 2010 Aldo Cortesi
+# Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
 # Copyright (c) 2012 Randall Ma
 # Copyright (c) 2012-2014 Tycho Andersen
@@ -75,31 +75,39 @@ keys = [
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+# groups = [Group(i) for i in "123456789"]
 
-for i in groups:
-    keys.extend(
-        [
-            # mod1 + letter of group = switch to group
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
-            ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
-            ),
+group_names = 'WEB DEV SYS DOC VM COMM MUS VID GFX'.split()
+groups = [Group(name, layout='max') for name in group_names]
+for i, name in enumerate(group_names):
+    indx = str(i + 1)
+    keys += [
+        Key([mod], indx, lazy.group[name].toscreen()),
+        Key([mod, 'shift'], indx, lazy.window.togroup(name))]
+
+# for i in groups:
+#    keys.extend(
+#        [
+#            # mod1 + letter of group = switch to group
+#            Key(
+#                [mod],
+#                i.name,
+#                lazy.group[i.name].toscreen(),
+#                desc="Switch to group {}".format(i.name),
+#            ),
+# mod1 + shift + letter of group = switch to & move focused window to group
+#            Key(
+#                [mod, "shift"],
+#                i.name,
+#                lazy.window.togroup(i.name, switch_group=True),
+#                desc="Switch to & move focused window to group {}".format(i.name),
+#            ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
             # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
             #     desc="move focused window to group {}".format(i.name)),
-        ]
-    )
+#        ]
+#    )
 
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
@@ -107,8 +115,8 @@ layouts = [
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.Matrix(),
+    layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -144,7 +152,8 @@ screens = [
                 # widget.StatusNotifier(),
                 widget.Systray(),
                 widget.CPU(),
-                widget.Clock(format="%d.%m.%y %H:%M:%S %w %U %j/365"),
+                widget.Clock(format="%d.%m.%y %H:%M:%S"),
+                # widget.Net(),
                 widget.QuickExit(),
             ],
             24,
@@ -171,7 +180,8 @@ screens = [
                 # widget.StatusNotifier(),
                 # widget.Systray(),
                 widget.CPU(),
-                widget.Clock(format="%d.%m.%y %H:%M:%S %w %U %j/365"),
+                widget.Clock(format="%d.%m.%y %H:%M:%S"),
+                # widget.Net()
                 widget.QuickExit(),
             ],
             24,
@@ -230,6 +240,6 @@ wmname = "LG3D"
 # Set monitor resolutions and orientations
 def set_monitors():
     subprocess.call(["xrandr", "--output", "DP-2", "--mode", "2560x1440", "--rate", "120.00"])
-    subprocess.call(["xrandr", "--output", "DVI-D-1", "--mode", "1600x900", "--rotate", "right", "--right-of", "DP-2"])
+    subprocess.call(["xrandr", "--output", "DVI-D-1", "--mode", "1600x900", "--rotate", "left", "--left-of", "DP-2"])
 
 set_monitors()
