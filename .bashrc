@@ -8,6 +8,10 @@
 # Aliases
 alias ls='ls --color=auto'
 alias config='/usr/bin/git --git-dir=/home/jl/dotfiles/ --work-tree=/home/jl'
+alias vim='nvim'
+alias v='nvim'
+alias vi='nvim'
+alias nvim='nvim -u /home/jl/.config/nvim/init.lua'
 
 # Environment Variables
 PS1='[\u@\h \W]\$ '

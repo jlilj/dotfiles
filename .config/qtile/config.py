@@ -25,7 +25,9 @@
 # SOFTWARE.
 
 from libqtile import bar, layout, widget
+# from libqtile.widget import Bluetooth
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
+# from libqtile.command import Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 import subprocess
@@ -73,12 +75,13 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+#    Key([mod], "#", lazy.spawn("xdotool key backslash", desc="Insert a backslash"),
 ]
 
 # groups = [Group(i) for i in "123456789"]
 
 group_names = 'WEB DEV SYS DOC VM COMM MUS VID GFX'.split()
-groups = [Group(name, layout='max') for name in group_names]
+groups = [Group(name, layout='columns') for name in group_names]
 for i, name in enumerate(group_names):
     indx = str(i + 1)
     keys += [
@@ -179,6 +182,7 @@ screens = [
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 # widget.Systray(),
+                # widget.Bluetooth(default_icon='bluetooth'),
                 widget.CPU(),
                 widget.Clock(format="%d.%m.%y %H:%M:%S"),
                 # widget.Net()
@@ -239,7 +243,6 @@ wmname = "LG3D"
 
 # Set monitor resolutions and orientations
 def set_monitors():
+    subprocess.call(["xrandr", "--output", "DVI-D-0", "--mode", "1600x900", "--rotate", "left", "--left-of", "DP-2"])
     subprocess.call(["xrandr", "--output", "DP-2", "--mode", "2560x1440", "--rate", "120.00"])
-    subprocess.call(["xrandr", "--output", "DVI-D-1", "--mode", "1600x900", "--rotate", "left", "--left-of", "DP-2"])
-
 set_monitors()

@@ -1,7 +1,11 @@
-local copilot = require("copilot")
+-- local copilot = require("copilot")
 
 local function enableCopilot()
 	copilot.enable()
+end
+
+local function disableCopilot()
+	copilot.disable()
 end
 
 vim.opt.number = true
