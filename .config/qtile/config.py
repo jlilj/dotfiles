@@ -243,6 +243,6 @@ wmname = "LG3D"
 
 # Set monitor resolutions and orientations
 def set_monitors():
-    subprocess.call(["xrandr", "--output", "DVI-D-0", "--mode", "1600x900", "--rotate", "left", "--left-of", "DP-2"])
-    subprocess.call(["xrandr", "--output", "DP-2", "--mode", "2560x1440", "--rate", "120.00"])
+#    subprocess.call(["xrandr", "--output", "DVI-D-0", "--mode", "1600x900", "--rotate", "left", "--left-of", "DP-2"])
+    subprocess.call(["xrandr", "--output", "DP-2", "--mode", "2560x1440", "--rate", "120.00", "--rotate", "right"])
 set_monitors()
